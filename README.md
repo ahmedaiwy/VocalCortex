@@ -17,3 +17,4 @@ mkdir build && cd build
 cmake ..
 make -j$(nproc)
 ./vocal_cortex
+# VocalCortex
