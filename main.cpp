@@ -21,6 +21,7 @@ std::string absolute_parser(std::string text, const std::vector<std::string>& ba
     text = std::regex_replace(text, std::regex("'"), "'\\''");
 
     // 1. HARDWARE SHORTCUTS
+    if (std::regex_search(text, std::regex("\\b(capture screen|take a screenshot|snap it)\\b", std::regex_constants::icase))) return "CMD_SCREENSHOT";
     if (std::regex_search(text, std::regex("\\b(go left|move left|lift|go lift)\\b", std::regex_constants::icase))) return "CMD_LEFT";
     if (std::regex_search(text, std::regex("\\b(go up|move up)\\b", std::regex_constants::icase))) return "CMD_UP";
     if (std::regex_search(text, std::regex("\\b(go down|move down)\\b", std::regex_constants::icase))) return "CMD_DOWN";
@@ -233,6 +234,7 @@ void execute_hardware_command(const std::string& input) {
     }
 
     // 2. PHYSICAL COMMAND INTERCEPTORS
+    if (clean_input == "CMD_SCREENSHOT") { std::system("gnome-screenshot -f ~/VocalCortex_$(date +%Y%m%d_%H%M%S).png &"); return; }
     if (clean_input == "CMD_VOL_UP")   { std::system("amixer -D pulse sset Master 5%+ > /dev/null 2>&1"); return; }
     if (clean_input == "CMD_VOL_DOWN") { std::system("amixer -D pulse sset Master 5%- > /dev/null 2>&1"); return; }
     if (clean_input == "CMD_MUTE")     { std::system("amixer -D pulse sset Master toggle > /dev/null 2>&1"); return; }
