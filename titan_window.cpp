@@ -20,7 +20,7 @@ TitanWindow::TitanWindow()
     m_vbox.pack_start(m_status_label, Gtk::PACK_SHRINK);
 
     // 3. Power Button
-    m_power_btn.set_label("Start Global Titan");
+    m_power_btn.set_label("Start VocalCortex");
     m_vbox.pack_start(m_power_btn, Gtk::PACK_SHRINK);
 
     // 4. Mode Switch (The requested Online/Offline toggle)
