@@ -234,7 +234,16 @@ void execute_hardware_command(const std::string& input) {
     }
 
     // 2. PHYSICAL COMMAND INTERCEPTORS
-    if (clean_input == "CMD_SCREENSHOT") { std::system("gnome-screenshot -f ~/VocalCortex_$(date +%Y%m%d_%H%M%S).png &"); return; }
+    if (clean_input == "CMD_SCREENSHOT") {
+    // We use '&&' so the sound only plays if the screenshot command starts successfully
+    std::string cmd = "mkdir -p ~/Pictures/Screenshots && "
+                      "gnome-screenshot -f ~/Pictures/Screenshots/VocalCortex_$(date +%Y%m%d_%H%M%S).png && "
+                      "canberra-gtk-play -i camera-shutter &";
+    
+    std::system(cmd.c_str());
+    std::cout << "📸 SHUTTER FIRED: Check ~/Pictures/Screenshots" << std::endl;
+    return;
+    }
     if (clean_input == "CMD_VOL_UP")   { std::system("amixer -D pulse sset Master 5%+ > /dev/null 2>&1"); return; }
     if (clean_input == "CMD_VOL_DOWN") { std::system("amixer -D pulse sset Master 5%- > /dev/null 2>&1"); return; }
     if (clean_input == "CMD_MUTE")     { std::system("amixer -D pulse sset Master toggle > /dev/null 2>&1"); return; }
